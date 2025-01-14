@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API Paheko</title>
+</head>
+<body>
+    <h1>Tester l'API Paheko</h1>
+    <button id="testApi">Envoyer une requête à l'API</button>
+    <p id="response"></p>
+
+    <script>
+        document.getElementById('testApi').addEventListener('click', () => {
+            const url = 'https://club-micromedia.paheko.cloud/api/members/access'; // Modifiez selon l'endpoint exact
+            const credentials = btoa('integration_nfc:nTMuFsd4FQGBe7Q1JtGoAQ'); // Remplacez par vos identifiants API
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + credentials
+                },
+                body: JSON.stringify({
+                    uid: '123456789',
+                    timestamp: new Date().toISOString()
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+                console.log(data);
+            })
+            .catch(error => {
+                document.getElementById('response').textContent = 'Erreur : ' + error;
+                console.error('Erreur :', error);
+            });
+        });
+    </script>
+</body>
+</html>
 
